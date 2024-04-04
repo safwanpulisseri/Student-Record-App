@@ -1,0 +1,23 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:student_details_app/screens/home%20screen.dart';
+
+class ScreenSplash extends StatelessWidget {
+  const ScreenSplash({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Timer(Duration(seconds: 1), () {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ScreenHome()));
+    });
+    return Scaffold(
+      backgroundColor: Colors.yellow,
+      body: Center(
+        child: Lottie.asset('assets/animation/Animation - 1712219924795.json'),
+      ),
+    );
+  }
+}
