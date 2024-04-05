@@ -74,6 +74,7 @@ class ScreenAdd extends StatelessWidget {
                         child: CircleAvatar(
                           backgroundColor: Colors.grey,
                           radius: 50,
+                          backgroundImage: AssetImage('assets/images/hero.png'),
                         ),
                       ),
                       TextFormField(
