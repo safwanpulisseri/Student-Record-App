@@ -14,7 +14,7 @@ class ScreenSplash extends StatelessWidget {
           context, MaterialPageRoute(builder: (context) => ScreenHome()));
     });
     return Scaffold(
-      backgroundColor: Colors.yellow,
+      backgroundColor: Colors.white,
       body: Center(
         child: Lottie.asset('assets/animation/Animation - 1712219924795.json'),
       ),

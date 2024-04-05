@@ -11,6 +11,9 @@ class ScreenAdd extends StatelessWidget {
         backgroundColor: Colors.yellow,
         title: Text(
           'Add',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
       ),
