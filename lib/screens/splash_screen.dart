@@ -1,17 +1,16 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:student_details_app/screens/home%20screen.dart';
+import 'package:student_details_app/screens/home_screen.dart';
 
 class ScreenSplash extends StatelessWidget {
   const ScreenSplash({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 1), () {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ScreenHome()));
+          context, MaterialPageRoute(builder: (context) => const ScreenHome()));
     });
     return Scaffold(
       backgroundColor: Colors.white,

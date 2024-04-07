@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:student_details_app/screens/update%20screen.dart';
+import 'package:student_details_app/screens/update_screen.dart';
 
 class ScreenDetails extends StatelessWidget {
   const ScreenDetails({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:student_details_app/screens/home%20screen.dart';
+import 'package:student_details_app/screens/home_screen.dart';
 //import 'package:student_details_app/screens/splash%20screen.dart';
 
 void main() {
