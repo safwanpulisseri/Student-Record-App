@@ -68,14 +68,14 @@ class ScreenHome extends StatelessWidget {
                                 height: 20,
                               ),
                               Text(
-                                'Name',
+                                'Name :',
                                 style: TextStyle(color: Colors.white),
                               ),
                               SizedBox(
                                 height: 20,
                               ),
                               Text(
-                                'Class',
+                                'Class :',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ],
