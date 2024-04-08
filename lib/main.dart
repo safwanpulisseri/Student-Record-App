@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:student_details_app/controller/controller.dart';
 import 'package:student_details_app/screens/home_screen.dart';
 //import 'package:student_details_app/screens/splash%20screen.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(ChangeNotifierProvider(
+    create: (_) => DataBaseProvider(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

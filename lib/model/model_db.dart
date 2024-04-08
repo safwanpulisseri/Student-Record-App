@@ -18,7 +18,7 @@ class StudentModel {
     final classRoom = map['classRoom'] as String;
     final guardian = map['guardian'] as String;
     final phone = map['phone'] as String;
-    final image = map['map'] as String;
+    final image = map['image'] as String;
     return StudentModel(
         id: id,
         name: name,
