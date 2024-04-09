@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:student_details_app/model/model_db.dart';
 import 'package:student_details_app/screens/update_screen.dart';
 
 class ScreenDetails extends StatelessWidget {
-  const ScreenDetails({super.key});
+  final studentdetails;
+  const ScreenDetails({super.key, required Studentmodel this.studentdetails});
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +109,7 @@ class ScreenDetails extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
-                    'Name :',
+                    'Name :${studentdetails.name}',
                     style: TextStyle(fontSize: 25),
                   ),
                 ),
@@ -118,7 +120,7 @@ class ScreenDetails extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
-                    'Class :',
+                    'Age :${studentdetails.age}',
                     style: TextStyle(fontSize: 25),
                   ),
                 ),
@@ -129,7 +131,7 @@ class ScreenDetails extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
-                    'Guardian :',
+                    'Phone no :${studentdetails.address}',
                     style: TextStyle(fontSize: 25),
                   ),
                 ),
@@ -140,7 +142,7 @@ class ScreenDetails extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
-                    'Phone :',
+                    'Place :${studentdetails.mobile}',
                     style: TextStyle(fontSize: 25),
                   ),
                 ),

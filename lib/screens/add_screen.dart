@@ -1,24 +1,29 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:student_details_app/controller/controller.dart';
 import 'package:student_details_app/model/model_db.dart';
 import 'package:student_details_app/screens/home_screen.dart';
 
-class ScreenAdd extends StatelessWidget {
+String? image;
+
+class ScreenAdd extends StatefulWidget {
   ScreenAdd({super.key});
 
-  String? imagePath;
+  @override
+  State<ScreenAdd> createState() => _ScreenAddState();
+}
 
-  final _formKey = GlobalKey<FormState>();
+class _ScreenAddState extends State<ScreenAdd> {
+  final GlobalKey<FormState> _validation = GlobalKey<FormState>();
 
-  final _nameController = TextEditingController();
-  final _classController = TextEditingController();
-  final _guardianController = TextEditingController();
-  final _phoneController = TextEditingController();
+  final _namecontroller = TextEditingController();
+  final _agecontroller = TextEditingController();
+  final _addresscontroller = TextEditingController();
+  final _mobilecontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final databaseProvider = Provider.of<DataBaseProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.yellow,
@@ -37,7 +42,7 @@ class ScreenAdd extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10),
               child: Form(
-                key: _formKey,
+                key: _validation,
                 child: Container(
                   height: 500,
                   width: MediaQuery.of(context).size.width,
@@ -97,8 +102,10 @@ class ScreenAdd extends StatelessWidget {
                           child: CircleAvatar(
                             backgroundColor: Colors.grey,
                             radius: 50,
-                            backgroundImage:
-                                AssetImage('assets/images/hero.png'),
+                            backgroundImage: image != null
+                                ? FileImage(File(image!))
+                                : AssetImage('assets/images/hero.png')
+                                    as ImageProvider,
                           ),
                         ),
                         TextFormField(
@@ -108,7 +115,7 @@ class ScreenAdd extends StatelessWidget {
                             }
                             return null;
                           },
-                          controller: _nameController,
+                          controller: _namecontroller,
                           decoration: InputDecoration(
                               hintText: 'Name',
                               suffixIcon: Icon(
@@ -122,12 +129,12 @@ class ScreenAdd extends StatelessWidget {
                             }
                             return null;
                           },
-                          controller: _classController,
+                          controller: _agecontroller,
                           decoration: InputDecoration(
                             suffixIcon: Icon(
                               Icons.class_,
                             ),
-                            hintText: 'Class',
+                            hintText: 'Age',
                           ),
                         ),
                         TextFormField(
@@ -137,12 +144,12 @@ class ScreenAdd extends StatelessWidget {
                             }
                             return null;
                           },
-                          controller: _guardianController,
+                          controller: _addresscontroller,
                           decoration: InputDecoration(
                             suffixIcon: Icon(
                               Icons.person_2_rounded,
                             ),
-                            hintText: 'Guardian',
+                            hintText: 'Address',
                           ),
                         ),
                         TextFormField(
@@ -154,7 +161,7 @@ class ScreenAdd extends StatelessWidget {
                             }
                             return null;
                           },
-                          controller: _phoneController,
+                          controller: _mobilecontroller,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             suffixIcon: Icon(
@@ -171,7 +178,7 @@ class ScreenAdd extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                addStudentClicked(context, databaseProvider);
+                addStudentClicked(context);
               },
               child: Text(
                 'Add',
@@ -188,50 +195,77 @@ class ScreenAdd extends StatelessWidget {
     );
   }
 
-  Future<void> addStudentClicked(
-      BuildContext context, DataBaseProvider databaseProvider) async {
-    if (_formKey.currentState!.validate()) {
-      final name = _nameController.text.toUpperCase();
-      final classRoom = _classController.text.toString().trim();
-      final guardian = _guardianController.text.toUpperCase();
-      final phone = _phoneController.text.toString().trim();
+  Future<void> addStudentClicked(BuildContext context) async {
+    final _name = _namecontroller.text.trim();
+    final _age = _agecontroller.text.trim();
+    final _address = _addresscontroller.text.trim();
+    final _mobile = _mobilecontroller.text.trim();
 
-      final studentData = StudentModel(
-          name: name,
-          classRoom: classRoom,
-          guardian: guardian,
-          phone: phone,
-          image: imagePath!);
-      await databaseProvider.addStudent(studentData);
-      // Navigator.push(
-      //     context, MaterialPageRoute(builder: (context) => ScreenHome()));
+    if (_validation.currentState!.validate() && image != null) {
+      final _student = Studentmodel(
+          name: _name,
+          age: _age,
+          address: _address,
+          mobile: _mobile,
+          image: image!);
+      await addStudent(_student);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Successfully Added'),
-          backgroundColor: Colors.green,
-          margin: EdgeInsets.all(10),
-          behavior: SnackBarBehavior.floating,
-          duration: Duration(seconds: 2),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Please Complete All Fields'),
-          margin: EdgeInsets.all(10),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 2),
-        ),
-      );
+      Navigator.of(context).pop();
+      clearStudentProfilephoto();
+      submitbuttondetailsok(_name);
+    } else if (_validation.currentState!.validate() && image == null) {
+      submitbuttondetailnotok();
     }
   }
 
+  clearStudentProfilephoto() {
+    _namecontroller.text = '';
+    _agecontroller.text = '';
+    _addresscontroller.text = '';
+    _mobilecontroller.text = '';
+    setState(() {
+      image = null;
+    });
+  }
+
+  submitbuttondetailsok(data) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: Duration(seconds: 2),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.green,
+        margin: const EdgeInsets.all(10),
+        content: Text(
+          '${data} Details Submitted',
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: Colors.black),
+        ),
+      ),
+    );
+  }
+
+  submitbuttondetailnotok() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: Duration(seconds: 2),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.red,
+        margin: const EdgeInsets.all(10),
+        content: Text(
+          'Please Add Student Identity Photo',
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: Colors.black),
+        ),
+      ),
+    );
+  }
+
   Future<void> getImage(ImageSource source, BuildContext context) async {
-    final image = await ImagePicker().pickImage(source: source);
-    if (image == null) {
-      return null;
+    final pickedImage = await ImagePicker().pickImage(source: source);
+    if (pickedImage != null) {
+      setState(() {
+        image = pickedImage.path;
+      });
     }
   }
 }

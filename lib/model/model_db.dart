@@ -1,30 +1,38 @@
-class StudentModel {
+class Studentmodel {
   int? id;
+
   final String name;
-  final String classRoom;
-  final String guardian;
-  final String phone;
+
+  final String age;
+
+  final String address;
+
+  final String mobile;
+
   final String image;
-  StudentModel(
-      {this.id,
-      required this.name,
-      required this.classRoom,
-      required this.guardian,
-      required this.phone,
-      required this.image});
-  static StudentModel fromMap(Map<String, Object?> map) {
+
+  Studentmodel(
+      {required this.name,
+      required this.age,
+      required this.address,
+      required this.mobile,
+      required this.image,
+      this.id});
+
+  static Studentmodel fromMap(Map<String, Object?> map) {
     final id = map['id'] as int;
     final name = map['name'] as String;
-    final classRoom = map['classRoom'] as String;
-    final guardian = map['guardian'] as String;
-    final phone = map['phone'] as String;
+    final age = map['age'] as String;
+    final address = map['address'] as String;
+    final mobile = map['mobile'] as String;
     final image = map['image'] as String;
-    return StudentModel(
+
+    return Studentmodel(
         id: id,
         name: name,
-        classRoom: classRoom,
-        guardian: guardian,
-        phone: phone,
+        age: age,
+        address: address,
+        mobile: mobile,
         image: image);
   }
 }
