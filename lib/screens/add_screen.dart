@@ -236,7 +236,7 @@ class _ScreenAddState extends State<ScreenAdd> {
         backgroundColor: Colors.green,
         margin: const EdgeInsets.all(10),
         content: Text(
-          '${data} Details Submitted',
+          '${data} Details Added',
           textAlign: TextAlign.center,
           style: const TextStyle(color: Colors.black),
         ),

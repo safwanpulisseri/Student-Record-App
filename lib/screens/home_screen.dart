@@ -52,12 +52,13 @@ class _ScreenHomeState extends State<ScreenHome> {
                   final data = studentList[index];
                   return GestureDetector(
                     onTap: () {
-                      //   Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => ScreenDetails(student: data),
-                      //     ),
-                      //   );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ScreenDetails(studentdetails: data),
+                        ),
+                      );
                     },
                     child: Card(
                       color: Colors.black45,

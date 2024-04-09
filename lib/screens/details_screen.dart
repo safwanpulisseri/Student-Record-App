@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:student_details_app/controller/controller.dart';
 import 'package:student_details_app/model/model_db.dart';
+import 'package:student_details_app/screens/home_screen.dart';
 import 'package:student_details_app/screens/update_screen.dart';
 
 class ScreenDetails extends StatelessWidget {
-  final studentdetails;
-  const ScreenDetails({super.key, required Studentmodel this.studentdetails});
+  final Studentmodel studentdetails;
+
+  const ScreenDetails({Key? key, required this.studentdetails})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,51 +43,69 @@ class ScreenDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(
-                                  'Are you sure you want to delete?',
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(
+                              'Are you sure you want to delete?',
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(color: Colors.black),
                                 ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(
-                                      'Cancel',
-                                      style: TextStyle(color: Colors.black),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  deleteStudent(studentdetails.id!);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (ctx) => ScreenHome()));
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Successfully Deleted'),
+                                      behavior: SnackBarBehavior.floating,
+                                      margin: EdgeInsets.all(10),
+                                      backgroundColor: Colors.red,
                                     ),
-                                  ),
-                                  TextButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        'Delete',
-                                        style: TextStyle(color: Colors.red),
-                                      ))
-                                ],
-                              );
-                            });
-                      },
-                      icon: Icon(
-                        color: Colors.grey.shade600,
-                        Icons.delete,
-                        size: 40,
-                      )),
+                                  );
+                                },
+                                child: Text(
+                                  'Delete',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.grey.shade600,
+                      size: 40,
+                    ),
+                  ),
                   IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ScreenUpdate()));
-                      },
-                      icon: Icon(
-                        color: Colors.grey.shade600,
-                        Icons.edit_square,
-                        size: 40,
-                      )),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ScreenUpdate()),
+                      );
+                    },
+                    icon: Icon(
+                      Icons.edit_square,
+                      color: Colors.grey.shade600,
+                      size: 40,
+                    ),
+                  ),
                 ],
               ),
               Row(
@@ -91,10 +115,18 @@ class ScreenDetails extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 20),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(
-                        'assets/images/hero.png',
+                      child: Container(
                         height: 220,
                         width: 220,
+                        child: studentdetails.image.isNotEmpty
+                            ? Image.file(
+                                File(studentdetails.image),
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(
+                                'assets/images/hero.png',
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                   ),
@@ -109,7 +141,7 @@ class ScreenDetails extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
-                    'Name :${studentdetails.name}',
+                    'Name: ${studentdetails.name}',
                     style: TextStyle(fontSize: 25),
                   ),
                 ),
@@ -120,7 +152,7 @@ class ScreenDetails extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
-                    'Age :${studentdetails.age}',
+                    'Age: ${studentdetails.age}',
                     style: TextStyle(fontSize: 25),
                   ),
                 ),
@@ -131,7 +163,7 @@ class ScreenDetails extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
-                    'Phone no :${studentdetails.address}',
+                    'Phone no: ${studentdetails.address}',
                     style: TextStyle(fontSize: 25),
                   ),
                 ),
@@ -142,7 +174,7 @@ class ScreenDetails extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
-                    'Place :${studentdetails.mobile}',
+                    'Place: ${studentdetails.mobile}',
                     style: TextStyle(fontSize: 25),
                   ),
                 ),
