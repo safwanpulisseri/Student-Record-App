@@ -1,7 +1,48 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:student_details_app/controller/controller.dart';
+import 'package:student_details_app/model/model_db.dart';
+import 'package:student_details_app/screens/add_screen.dart';
+import 'package:student_details_app/screens/home_screen.dart';
 
-class ScreenUpdate extends StatelessWidget {
-  const ScreenUpdate({super.key});
+class ScreenUpdate extends StatefulWidget {
+  final Studentmodel studentDetails;
+
+  const ScreenUpdate({Key? key, required this.studentDetails})
+      : super(key: key);
+
+  @override
+  State<ScreenUpdate> createState() => _ScreenUpdateState();
+}
+
+class _ScreenUpdateState extends State<ScreenUpdate> {
+  late TextEditingController _nameController;
+  late TextEditingController _ageController;
+  late TextEditingController _addressController;
+  late TextEditingController _mobileController;
+  late String? image;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.studentDetails.name);
+    _ageController = TextEditingController(text: widget.studentDetails.age);
+    _addressController =
+        TextEditingController(text: widget.studentDetails.address);
+    _mobileController =
+        TextEditingController(text: widget.studentDetails.mobile);
+    image = widget.studentDetails.image;
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _ageController.dispose();
+    _addressController.dispose();
+    _mobileController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,43 +81,55 @@ class ScreenUpdate extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text(
-                                    'Select Option',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  actions: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.camera_alt_rounded,
-                                          ),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(
+                                  'Select Option',
+                                  textAlign: TextAlign.center,
+                                ),
+                                actions: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          getImage(ImageSource.camera, context);
+                                          Navigator.of(context).pop();
+                                        },
+                                        icon: Icon(
+                                          Icons.camera_alt_rounded,
                                         ),
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.image,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                );
-                              });
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          getImage(
+                                              ImageSource.gallery, context);
+                                          Navigator.of(context).pop();
+                                        },
+                                        icon: Icon(
+                                          Icons.image,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
                         child: CircleAvatar(
-                          backgroundColor: const Color.fromARGB(255, 6, 4, 4),
+                          backgroundColor: Colors.grey,
                           radius: 50,
-                          backgroundImage: AssetImage('assets/images/hero.png'),
+                          backgroundImage: image != null
+                              ? FileImage(File(image!))
+                              : AssetImage('assets/images/hero.png')
+                                  as ImageProvider,
                         ),
                       ),
                       TextFormField(
+                        controller: _nameController,
                         decoration: InputDecoration(
                             hintText: 'Name',
                             suffixIcon: Icon(
@@ -84,22 +137,25 @@ class ScreenUpdate extends StatelessWidget {
                             )),
                       ),
                       TextFormField(
+                        controller: _ageController,
                         decoration: InputDecoration(
                           suffixIcon: Icon(
                             Icons.class_,
                           ),
-                          hintText: 'Class',
+                          hintText: 'Age',
                         ),
                       ),
                       TextFormField(
+                        controller: _addressController,
                         decoration: InputDecoration(
                           suffixIcon: Icon(
                             Icons.person_2_rounded,
                           ),
-                          hintText: 'Guardian',
+                          hintText: 'Address',
                         ),
                       ),
                       TextFormField(
+                        controller: _mobileController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           suffixIcon: Icon(
@@ -114,7 +170,28 @@ class ScreenUpdate extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                updateStudent(
+                  widget.studentDetails.id!,
+                  _nameController.text,
+                  _ageController.text,
+                  _addressController.text,
+                  _mobileController.text,
+                  image ??
+                      widget.studentDetails
+                          .image, // Use the new image if available, otherwise use the existing image
+                );
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (ctx) => ScreenHome()));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Successfully Updated'),
+                    behavior: SnackBarBehavior.floating,
+                    margin: EdgeInsets.all(10),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              },
               child: Text(
                 'Submit',
                 style: TextStyle(
@@ -128,5 +205,14 @@ class ScreenUpdate extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> getImage(ImageSource source, BuildContext context) async {
+    final pickedImage = await ImagePicker().pickImage(source: source);
+    if (pickedImage != null) {
+      setState(() {
+        image = pickedImage.path;
+      });
+    }
   }
 }

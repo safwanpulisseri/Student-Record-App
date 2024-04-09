@@ -97,7 +97,10 @@ class ScreenDetails extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ScreenUpdate()),
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ScreenUpdate(studentDetails: studentdetails),
+                        ),
                       );
                     },
                     icon: Icon(

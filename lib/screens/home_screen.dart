@@ -40,6 +40,14 @@ class _ScreenHomeState extends State<ScreenHome> {
             valueListenable: studentlistNotifier,
             builder: (BuildContext ctx, List<Studentmodel> studentList,
                 Widget? child) {
+              if (studentList.isEmpty) {
+                return Center(
+                  child: Text(
+                    'No student records found.',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                );
+              }
               return GridView.builder(
                 scrollDirection: Axis.vertical,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
