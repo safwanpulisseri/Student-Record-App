@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:student_details_app/controller/controller.dart';
 import 'package:student_details_app/model/model_db.dart';
-import 'package:student_details_app/screens/home_screen.dart';
 
 String? image;
 
@@ -238,7 +237,6 @@ class _ScreenAddState extends State<ScreenAdd> {
         content: Text(
           '${data} Details Added',
           textAlign: TextAlign.center,
-          style: const TextStyle(color: Colors.black),
         ),
       ),
     );
@@ -254,7 +252,6 @@ class _ScreenAddState extends State<ScreenAdd> {
         content: Text(
           'Please Add Student Identity Photo',
           textAlign: TextAlign.center,
-          style: const TextStyle(color: Colors.black),
         ),
       ),
     );

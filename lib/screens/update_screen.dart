@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:student_details_app/controller/controller.dart';
 import 'package:student_details_app/model/model_db.dart';
-import 'package:student_details_app/screens/add_screen.dart';
 import 'package:student_details_app/screens/home_screen.dart';
 
 class ScreenUpdate extends StatefulWidget {

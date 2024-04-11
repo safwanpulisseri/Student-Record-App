@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:student_details_app/controller/controller.dart';
 import 'package:student_details_app/model/model_db.dart';
@@ -166,7 +165,7 @@ class ScreenDetails extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
-                    'Phone no: ${studentdetails.address}',
+                    'Adress: ${studentdetails.address}',
                     style: TextStyle(fontSize: 25),
                   ),
                 ),
@@ -177,7 +176,7 @@ class ScreenDetails extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
-                    'Place: ${studentdetails.mobile}',
+                    'Phone: ${studentdetails.mobile}',
                     style: TextStyle(fontSize: 25),
                   ),
                 ),

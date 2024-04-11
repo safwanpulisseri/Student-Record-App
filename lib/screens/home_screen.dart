@@ -4,6 +4,7 @@ import 'package:student_details_app/controller/controller.dart';
 import 'package:student_details_app/model/model_db.dart';
 import 'package:student_details_app/screens/add_screen.dart';
 import 'package:student_details_app/screens/details_screen.dart';
+import 'package:student_details_app/widgets/search.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({Key? key}) : super(key: key);
@@ -13,6 +14,8 @@ class ScreenHome extends StatefulWidget {
 }
 
 class _ScreenHomeState extends State<ScreenHome> {
+  String _searchQuery = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,10 +29,17 @@ class _ScreenHomeState extends State<ScreenHome> {
         ),
         centerTitle: true,
         actions: [
-          Icon(Icons.search),
-          SizedBox(
-            width: 20,
-          )
+          IconButton(
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: StudentSearchDelegate(),
+              );
+            },
+            icon: Icon(
+              Icons.search,
+            ),
+          ),
         ],
         leading: Container(),
       ),
