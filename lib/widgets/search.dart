@@ -13,7 +13,7 @@ class StudentSearchDelegate extends SearchDelegate<String> {
         onPressed: () {
           query = '';
         },
-        icon: Icon(
+        icon: const Icon(
           Icons.clear,
         ),
       ),
@@ -27,7 +27,7 @@ class StudentSearchDelegate extends SearchDelegate<String> {
       onPressed: () {
         Navigator.of(context).pop();
       },
-      icon: Icon(
+      icon: const Icon(
         Icons.arrow_back,
       ),
     );
@@ -46,7 +46,7 @@ class StudentSearchDelegate extends SearchDelegate<String> {
             student.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
     if (suggestionList.isEmpty) {
-      return Center(
+      return const Center(
         child: Text(
           'No students found.',
           style: TextStyle(
@@ -64,7 +64,7 @@ class StudentSearchDelegate extends SearchDelegate<String> {
             radius: 25,
             backgroundImage: student.image.isNotEmpty
                 ? FileImage(File(student.image))
-                : AssetImage('assets/images/hero.png') as ImageProvider,
+                : const AssetImage('assets/images/hero.png') as ImageProvider,
           ),
           title: Text(student.name),
           onTap: () {

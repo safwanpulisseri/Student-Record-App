@@ -7,7 +7,7 @@ import 'package:student_details_app/model/model_db.dart';
 String? image;
 
 class ScreenAdd extends StatefulWidget {
-  ScreenAdd({super.key});
+  const ScreenAdd({super.key});
 
   @override
   State<ScreenAdd> createState() => _ScreenAddState();
@@ -26,7 +26,7 @@ class _ScreenAddState extends State<ScreenAdd> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.yellow,
-        title: Text(
+        title: const Text(
           'Add',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -60,50 +60,51 @@ class _ScreenAddState extends State<ScreenAdd> {
                         GestureDetector(
                           onTap: () {
                             showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text(
-                                      'Select image from...',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    actions: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          IconButton(
-                                            onPressed: () {
-                                              getImage(
-                                                  ImageSource.camera, context);
-                                              Navigator.of(context).pop();
-                                            },
-                                            icon: Icon(
-                                              Icons.camera_alt_rounded,
-                                            ),
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text(
+                                    'Select image from...',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  actions: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            getImage(
+                                                ImageSource.camera, context);
+                                            Navigator.of(context).pop();
+                                          },
+                                          icon: const Icon(
+                                            Icons.camera_alt_rounded,
                                           ),
-                                          IconButton(
-                                            onPressed: () {
-                                              getImage(
-                                                  ImageSource.gallery, context);
-                                              Navigator.of(context).pop();
-                                            },
-                                            icon: Icon(
-                                              Icons.image,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  );
-                                });
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            getImage(
+                                                ImageSource.gallery, context);
+                                            Navigator.of(context).pop();
+                                          },
+                                          icon: const Icon(
+                                            Icons.image,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           },
                           child: CircleAvatar(
                             backgroundColor: Colors.grey,
                             radius: 50,
                             backgroundImage: image != null
                                 ? FileImage(File(image!))
-                                : AssetImage('assets/images/hero.png')
+                                : const AssetImage('assets/images/hero.png')
                                     as ImageProvider,
                           ),
                         ),
@@ -115,7 +116,7 @@ class _ScreenAddState extends State<ScreenAdd> {
                             return null;
                           },
                           controller: _namecontroller,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               hintText: 'Name',
                               suffixIcon: Icon(
                                 Icons.abc,
@@ -129,7 +130,7 @@ class _ScreenAddState extends State<ScreenAdd> {
                             return null;
                           },
                           controller: _agecontroller,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             suffixIcon: Icon(
                               Icons.class_,
                             ),
@@ -144,7 +145,7 @@ class _ScreenAddState extends State<ScreenAdd> {
                             return null;
                           },
                           controller: _addresscontroller,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             suffixIcon: Icon(
                               Icons.person_2_rounded,
                             ),
@@ -162,7 +163,7 @@ class _ScreenAddState extends State<ScreenAdd> {
                           },
                           controller: _mobilecontroller,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             suffixIcon: Icon(
                               Icons.phone,
                             ),
@@ -179,14 +180,14 @@ class _ScreenAddState extends State<ScreenAdd> {
               onPressed: () {
                 addStudentClicked(context);
               },
-              child: Text(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
+              child: const Text(
                 'Add',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 25,
                 ),
               ),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
             )
           ],
         ),
@@ -195,23 +196,23 @@ class _ScreenAddState extends State<ScreenAdd> {
   }
 
   Future<void> addStudentClicked(BuildContext context) async {
-    final _name = _namecontroller.text.trim();
-    final _age = _agecontroller.text.trim();
-    final _address = _addresscontroller.text.trim();
-    final _mobile = _mobilecontroller.text.trim();
+    final name = _namecontroller.text.trim();
+    final age = _agecontroller.text.trim();
+    final address = _addresscontroller.text.trim();
+    final mobile = _mobilecontroller.text.trim();
 
     if (_validation.currentState!.validate() && image != null) {
-      final _student = Studentmodel(
-          name: _name,
-          age: _age,
-          address: _address,
-          mobile: _mobile,
+      final student = Studentmodel(
+          name: name,
+          age: age,
+          address: address,
+          mobile: mobile,
           image: image!);
-      await addStudent(_student);
+      await addStudent(student);
 
       Navigator.of(context).pop();
       clearStudentProfilephoto();
-      submitbuttondetailsok(_name);
+      submitbuttondetailsok(name);
     } else if (_validation.currentState!.validate() && image == null) {
       submitbuttondetailnotok();
     }
@@ -230,12 +231,12 @@ class _ScreenAddState extends State<ScreenAdd> {
   submitbuttondetailsok(data) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
         behavior: SnackBarBehavior.floating,
         backgroundColor: Colors.green,
         margin: const EdgeInsets.all(10),
         content: Text(
-          '${data} Details Added',
+          '$data\'s Details Added',
           textAlign: TextAlign.center,
         ),
       ),
@@ -244,11 +245,11 @@ class _ScreenAddState extends State<ScreenAdd> {
 
   submitbuttondetailnotok() {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         duration: Duration(seconds: 2),
         behavior: SnackBarBehavior.floating,
         backgroundColor: Colors.red,
-        margin: const EdgeInsets.all(10),
+        margin: EdgeInsets.all(10),
         content: Text(
           'Please Add Student Identity Photo',
           textAlign: TextAlign.center,

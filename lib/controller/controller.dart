@@ -25,12 +25,12 @@ Future<void> addStudent(Studentmodel value) async {
 }
 
 Future<void> getAllStudents() async {
-  final _values = await _db.rawQuery('SELECT * FROM student');
+  final values = await _db.rawQuery('SELECT * FROM student');
   studentlistNotifier.value.clear();
-  _values.forEach((map) {
+  for (var map in values) {
     final student = Studentmodel.fromMap(map);
     studentlistNotifier.value.add(student);
-  });
+  }
   studentlistNotifier.notifyListeners();
 }
 

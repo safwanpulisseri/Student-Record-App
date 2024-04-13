@@ -8,8 +8,7 @@ import 'package:student_details_app/screens/update_screen.dart';
 class ScreenDetails extends StatelessWidget {
   final Studentmodel studentdetails;
 
-  const ScreenDetails({Key? key, required this.studentdetails})
-      : super(key: key);
+  const ScreenDetails({super.key, required this.studentdetails});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,7 @@ class ScreenDetails extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.yellow,
-        title: Text(
+        title: const Text(
           "Details",
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -47,7 +46,7 @@ class ScreenDetails extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text(
+                            title: const Text(
                               'Are you sure you want to delete?',
                             ),
                             actions: [
@@ -55,7 +54,7 @@ class ScreenDetails extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Cancel',
                                   style: TextStyle(color: Colors.black),
                                 ),
@@ -66,9 +65,10 @@ class ScreenDetails extends StatelessWidget {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (ctx) => ScreenHome()));
+                                          builder: (ctx) =>
+                                              const ScreenHome()));
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
+                                    const SnackBar(
                                       content: Text('Successfully Deleted'),
                                       behavior: SnackBarBehavior.floating,
                                       margin: EdgeInsets.all(10),
@@ -76,7 +76,7 @@ class ScreenDetails extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Delete',
                                   style: TextStyle(color: Colors.red),
                                 ),
@@ -117,7 +117,7 @@ class ScreenDetails extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 20),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Container(
+                      child: SizedBox(
                         height: 220,
                         width: 220,
                         child: studentdetails.image.isNotEmpty
@@ -134,50 +134,50 @@ class ScreenDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
                     'Name: ${studentdetails.name}',
-                    style: TextStyle(fontSize: 25),
+                    style: const TextStyle(fontSize: 25),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
                     'Age: ${studentdetails.age}',
-                    style: TextStyle(fontSize: 25),
+                    style: const TextStyle(fontSize: 25),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
                     'Adress: ${studentdetails.address}',
-                    style: TextStyle(fontSize: 25),
+                    style: const TextStyle(fontSize: 25),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: Text(
                     'Phone: ${studentdetails.mobile}',
-                    style: TextStyle(fontSize: 25),
+                    style: const TextStyle(fontSize: 25),
                   ),
                 ),
               ),

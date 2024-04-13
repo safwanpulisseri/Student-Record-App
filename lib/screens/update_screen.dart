@@ -8,8 +8,7 @@ import 'package:student_details_app/screens/home_screen.dart';
 class ScreenUpdate extends StatefulWidget {
   final Studentmodel studentDetails;
 
-  const ScreenUpdate({Key? key, required this.studentDetails})
-      : super(key: key);
+  const ScreenUpdate({super.key, required this.studentDetails});
 
   @override
   State<ScreenUpdate> createState() => _ScreenUpdateState();
@@ -48,7 +47,7 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.yellow,
-        title: Text(
+        title: const Text(
           'Update',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -83,7 +82,7 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text(
+                                title: const Text(
                                   'Select Option',
                                   textAlign: TextAlign.center,
                                 ),
@@ -97,7 +96,7 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                                           getImage(ImageSource.camera, context);
                                           Navigator.of(context).pop();
                                         },
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Icons.camera_alt_rounded,
                                         ),
                                       ),
@@ -107,7 +106,7 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                                               ImageSource.gallery, context);
                                           Navigator.of(context).pop();
                                         },
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Icons.image,
                                         ),
                                       )
@@ -123,13 +122,13 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                           radius: 50,
                           backgroundImage: image != null
                               ? FileImage(File(image!))
-                              : AssetImage('assets/images/hero.png')
+                              : const AssetImage('assets/images/hero.png')
                                   as ImageProvider,
                         ),
                       ),
                       TextFormField(
                         controller: _nameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: 'Name',
                             suffixIcon: Icon(
                               Icons.abc,
@@ -137,7 +136,7 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                       ),
                       TextFormField(
                         controller: _ageController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           suffixIcon: Icon(
                             Icons.class_,
                           ),
@@ -146,7 +145,7 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                       ),
                       TextFormField(
                         controller: _addressController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           suffixIcon: Icon(
                             Icons.person_2_rounded,
                           ),
@@ -156,7 +155,7 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                       TextFormField(
                         controller: _mobileController,
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           suffixIcon: Icon(
                             Icons.phone,
                           ),
@@ -180,10 +179,10 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                       widget.studentDetails
                           .image, // Use the new image if available, otherwise use the existing image
                 );
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (ctx) => ScreenHome()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (ctx) => const ScreenHome()));
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
+                  const SnackBar(
                     content: Text('Successfully Updated'),
                     behavior: SnackBarBehavior.floating,
                     margin: EdgeInsets.all(10),
@@ -191,14 +190,14 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                   ),
                 );
               },
-              child: Text(
-                'Submit',
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
+              child: const Text(
+                'Update',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 25,
                 ),
               ),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
             )
           ],
         ),

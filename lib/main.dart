@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:student_details_app/controller/controller.dart';
-import 'package:student_details_app/screens/home_screen.dart';
+import 'package:student_details_app/screens/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow),
         useMaterial3: true,
       ),
-      home: const ScreenHome(),
+      home: const ScreenSplash(),
     );
   }
 }

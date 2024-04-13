@@ -8,9 +8,9 @@ class ScreenSplash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 1), () {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ScreenHome()));
+          context, MaterialPageRoute(builder: (context) => const ScreenHome()));
     });
     return Scaffold(
       backgroundColor: Colors.white,
